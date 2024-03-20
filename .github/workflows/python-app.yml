@@ -1,0 +1,19 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and test Docker image
+        run: |
+          docker build -t my-flask-app .
+          docker run my-flask-app python -m unittest discover -s tests -p '*_test.py'
